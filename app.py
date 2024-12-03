@@ -8,11 +8,8 @@ app = Flask(__name__)
 
 # Helper function to load data
 def load_data():
-    try:
-        with open('data/devices.json', 'r') as file:
-            return json.load(file)
-    except Exception as e:
-        print(e)
+    with open('data/devices.json', 'r') as file:
+        return json.load(file)
 
 @app.route('/')
 def index():
@@ -21,13 +18,14 @@ def index():
 
     # Extract protocols and Wi-Fi standards
     protocols = [
-        device['dot11.device']['dot11.device.advertised_ssid_map'][0]['dot11.advertisedssid.crypt_string']
+        device['dot11.device'].get('dot11.device.advertised_ssid_map', [{}])[0].get('dot11.advertisedssid.crypt_string', 'Unknown')
         for device in data if 'dot11.device' in device
     ]
     wifi_standards = [
-        device['dot11.device']['dot11.device.advertised_ssid_map'][0].get('dot11.advertisedssid.ht_mode', 'Unknown')
+        device['dot11.device'].get('dot11.device.advertised_ssid_map', [{}])[0].get('dot11.advertisedssid.ht_mode', 'Unknown')
         for device in data if 'dot11.device' in device
     ]
+
 
     # Map ht_mode to Wi-Fi standards
     wifi_standard_map = {
