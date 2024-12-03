@@ -8,8 +8,11 @@ app = Flask(__name__)
 
 # Helper function to load data
 def load_data():
-    with open('data/devices.json', 'r') as file:
-        return json.load(file)
+    try:
+        with open('data/devices.json', 'r') as file:
+            return json.load(file)
+    except Exception as e:
+        print(e)
 
 @app.route('/')
 def index():
