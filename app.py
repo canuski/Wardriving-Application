@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 # Helper function to load data
 def load_data():
-    with open('data/devices.json', 'r') as file:
+    with open('data/devices_wannes.json', 'r') as file:
         return json.load(file)
 
 @app.route('/')
@@ -17,20 +17,34 @@ def index():
     data = load_data()
 
     # Extract protocols and Wi-Fi standards
-    protocols = [
-        device['dot11.device'].get('dot11.device.advertised_ssid_map', [{}])[0].get('dot11.advertisedssid.crypt_string', 'Unknown')
-        for device in data if 'dot11.device' in device
-    ]
-    wifi_standards = [
-        device['dot11.device'].get('dot11.device.advertised_ssid_map', [{}])[0].get('dot11.advertisedssid.ht_mode', 'Unknown')
-        for device in data if 'dot11.device' in device
-    ]
+    protocols = []
+    wifi_standards = []
 
+    for device in data:
+        if 'dot11.device' in device:
+            # Try to get advertised SSID data
+            advertised_ssid = device['dot11.device'].get('dot11.device.advertised_ssid_map', [])
+            for ssid in advertised_ssid:
+                crypt_string = ssid.get('dot11.advertisedssid.crypt_string', 'Unknown')
+                ht_mode = ssid.get('dot11.advertisedssid.ht_mode', 'Unknown')
+                protocols.append(crypt_string)
+                wifi_standards.append(ht_mode)
+
+            # Try to get probed SSID data
+            probed_ssid = device['dot11.device'].get('dot11.device.probed_ssid_map', [])
+            for ssid in probed_ssid:
+                crypt_string = ssid.get('dot11.probedssid.crypt_string', 'Unknown')
+                ht_mode = ssid.get('dot11.probedssid.ht_mode', 'Unknown')
+                protocols.append(crypt_string)
+                wifi_standards.append(ht_mode)
 
     # Map ht_mode to Wi-Fi standards
     wifi_standard_map = {
         "HT20": "Wi-Fi 4",
         "HT40": "Wi-Fi 4",
+        "HT40-": "Wi-Fi 4",
+        "HT40+": "Wi-Fi 4",
+        "HT80": "Wi-Fi 5",
         "VHT": "Wi-Fi 5",
         "HE": "Wi-Fi 6",
         "EHT": "Wi-Fi 7"
@@ -40,6 +54,11 @@ def index():
     # Count occurrences
     protocol_counts = Counter(protocols)
     wifi_standard_counts = Counter(mapped_standards)
+
+    print("Extracted Protocols:", protocols)
+    print("Extracted Wi-Fi Standards:", wifi_standards)
+    print("Mapped Standards:", mapped_standards)
+
 
     # Generate interactive graphs
     protocol_fig = px.pie(
@@ -59,6 +78,7 @@ def index():
     pio.write_html(wifi_fig, file="static/wifi_chart.html", auto_open=False)
 
     return render_template('index.html')
+
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000, debug=True)
