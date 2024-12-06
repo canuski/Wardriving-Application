@@ -1,27 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Wardriving Data Analysis</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-</head>
-<body>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
     <header>
-        <h1>Wardriving Data Analysis</h1>
+      <h1>Wardriving Data Analysis</h1>
     </header>
     <main>
-        <section>
-            <div class="graph-container">
-                <h2>Authentication Protocols</h2>
-                <iframe src="{{ url_for('static', filename='protocol_chart.html') }}"></iframe>
-            </div>
-            <div class="graph-container">
-                <h2>Wi-Fi Standards</h2>
-                <iframe src="{{ url_for('static', filename='wifi_chart.html') }}"></iframe>
-            </div>
-        </section>
+      <section>
+        <div class="graph-container">
+          <h2>Authentication Protocols</h2>
+          <iframe
+            src="{{ url_for('static', filename='protocol_chart.html') }}"
+          ></iframe>
+        </div>
+        <div class="graph-container">
+          <h2>Bandwidth Distribution</h2>
+          <!-- Updated title -->
+          <iframe
+            src="{{ url_for('static', filename='bandwidth_chart.html') }}"
+          ></iframe>
+          <!-- Updated chart -->
+        </div>
+      </section>
     </main>
-</body>
+  </body>
 </html>
