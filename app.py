@@ -10,7 +10,7 @@ app = Flask(__name__)
 
 
 def load_data():
-    with open('data/devices_wannes.json', 'r') as file:
+    with open('data/devices_GPS2.json', 'r') as file:
         return json.load(file)
 
 
