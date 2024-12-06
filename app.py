@@ -8,6 +8,8 @@ from collections import Counter
 app = Flask(__name__)
 
 # Helper function to load data
+
+
 def load_data():
     with open('data/devices_GPS2.json', 'r') as file:
         return json.load(file)
@@ -18,6 +20,31 @@ def index():
     # Load JSON data
     data = load_data()
 
+    # Extract protocols and bandwidth modes
+    protocols = []
+    bandwidths = []
+
+    for device in data:
+        if 'dot11.device' in device:
+            # Try to get advertised SSID data
+            advertised_ssid = device['dot11.device'].get(
+                'dot11.device.advertised_ssid_map', [])
+            for ssid in advertised_ssid:
+                crypt_string = ssid.get(
+                    'dot11.advertisedssid.crypt_string', 'Unknown')
+                ht_mode = ssid.get('dot11.advertisedssid.ht_mode', 'Unknown')
+                protocols.append(crypt_string)
+                bandwidths.append(ht_mode)
+
+            # Try to get probed SSID data
+            probed_ssid = device['dot11.device'].get(
+                'dot11.device.probed_ssid_map', [])
+            for ssid in probed_ssid:
+                crypt_string = ssid.get(
+                    'dot11.probedssid.crypt_string', 'Unknown')
+                ht_mode = ssid.get('dot11.probedssid.ht_mode', 'Unknown')
+                protocols.append(crypt_string)
+                bandwidths.append(ht_mode)
     # Extract protocols and bandwidth modes
     protocols = []
     bandwidths = []
@@ -54,6 +81,7 @@ def index():
     mapped_bandwidths = [bandwidth_map.get(
         bandwidth, 'Unknown') for bandwidth in bandwidths]
 
+    # Count occurrences of protocols and bandwidths
     # Count occurrences of protocols and bandwidths
     protocol_counts = Counter(protocols)
     bandwidth_counts = Counter(mapped_bandwidths)
@@ -119,5 +147,7 @@ def index():
 
     return render_template('index.html')
 
+
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000, debug=True)
+
