@@ -1,13 +1,13 @@
-from flask import Flask, render_template
-import json
-import os
-import plotly.express as px
-import plotly.io as pio
-import folium
-from folium.plugins import MarkerCluster
-from collections import Counter
-import ijson
 from flask_caching import Cache
+import ijson
+from collections import Counter
+from folium.plugins import MarkerCluster
+import folium
+import plotly.io as pio
+import plotly.express as px
+import json
+from flask import Flask, render_template
+
 
 app = Flask(__name__)
 
@@ -18,7 +18,7 @@ cache = Cache(app, config={'CACHE_TYPE': 'SimpleCache'})
 
 
 def load_data():
-    with open('data/1.json.json', 'r') as file:
+    with open('data/devices-GPS.json', 'r') as file:
         parser = ijson.items(file, "item")
         return [item for item in parser]
 
@@ -28,7 +28,7 @@ def load_data():
 @app.route('/')
 @cache.cached(timeout=300)  # Cache results for 5 minutes
 def index():
-    # Load JSON data from all files
+    # Load JSON data
     data = load_data()
 
     # Extract protocols and bandwidths efficiently
@@ -39,7 +39,6 @@ def index():
         "HT20": 20, "HT40": 40, "HT40-": 40, "HT40+": 40,
         "HT80": 80, "VHT": 80, "HE": 160, "EHT": 320,
     }
-    mapped_bandwidths = [bandwidth_map.get(bandwidth, 'Unknown') for bandwidth in bandwidths]
 
     for device in data:
         if 'dot11.device' not in device:
