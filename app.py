@@ -9,6 +9,7 @@ from folium.plugins import MarkerCluster
 from collections import Counter
 import pandas as pd
 from geopy.distance import geodesic
+import json_fix
 
 app = Flask(__name__)
 
@@ -19,6 +20,7 @@ cache = Cache(app, config={'CACHE_TYPE': 'SimpleCache'})
 
 
 def load_data():
+    json_fix.clean_json('data', 'cleaned_data')
     data = []
     data_folder = 'cleaned_data'  # Folder where cleaned JSON files are saved
     # Load each JSON file in the 'data' folder
