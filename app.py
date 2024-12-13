@@ -1,28 +1,26 @@
+from flask import Flask, render_template
 from flask_caching import Cache
-import ijson
-from collections import Counter
-from folium.plugins import MarkerCluster
-import folium
 import plotly.io as pio
 import plotly.express as px
 import json
-from flask import Flask, render_template
 import os
-from geopy.distance import geodesic
+import folium
+from folium.plugins import MarkerCluster
 from collections import Counter
-
+import pandas as pd
+from geopy.distance import geodesic
 
 app = Flask(__name__)
 
 # Configure Flask-Caching
 cache = Cache(app, config={'CACHE_TYPE': 'SimpleCache'})
 
-# Helper function to load all JSON files from the 'data' folder
+# Helper function to load all JSON files from the 'cleaned_data' folder
 
 
 def load_data():
     data = []
-    data_folder = 'cleaned_data'
+    data_folder = 'cleaned_data'  # Folder where cleaned JSON files are saved
     # Load each JSON file in the 'data' folder
     for filename in os.listdir(data_folder):
         if filename.endswith('.json'):
@@ -38,30 +36,28 @@ def load_data():
                     print(f"Error reading {filename}: {e}")
     return data
 
-# Helper function to extract routes from each file
+# Helper function to extract protocols and bandwidths
 
 
-def extract_route(data):
-    route = []
-    previous_point = None
+def extract_protocols_bandwidths(data):
+    protocols = []
+    bandwidths = []
+
     for device in data:
-        try:
-            location = device["kismet.device.base.location"]["kismet.common.location.avg_loc"]["kismet.common.location.geopoint"]
-            lat, lon = location[1], location[0]
-            if -90 <= lat <= 90 and -180 <= lon <= 180:
-                current_point = (lat, lon)
-                if previous_point:
-                    distance = geodesic(
-                        previous_point, current_point).kilometers
-                    if distance > 50:  # Filter out jumps larger than 50 km
-                        print(
-                            f"Invalid jump from {previous_point} to {current_point} ({distance:.2f} km)")
-                        continue
-                route.append(current_point)
-                previous_point = current_point
-        except KeyError:
-            continue
-    return route
+        encryption = device.get("encryption", "Unknown")
+        bandwidth = device.get("bandwidth", "Unknown")
+
+        # Add the encryption protocol (assuming 'encryption' can have multiple values)
+        protocols.append(encryption)
+
+        # Add the bandwidth (HT40, HT80, etc.)
+        bandwidths.append(bandwidth)
+
+    # Count occurrences of protocols and bandwidths
+    protocol_counts = Counter(protocols)
+    bandwidth_counts = Counter(bandwidths)
+
+    return protocol_counts, bandwidth_counts
 
 # Route for the main page with graphs and map
 
@@ -72,50 +68,30 @@ def index():
     # Load JSON data
     data = load_data()
 
-    # Extract protocols and bandwidths efficiently
-    protocols = []
-    bandwidths = []
-
-    bandwidth_map = {
-        "HT20": 20, "HT40": 40, "HT40-": 40, "HT40+": 40,
-        "HT80": 80, "VHT": 80, "HE": 160, "EHT": 320,
-    }
-
-    for device in data:
-        if 'dot11.device' not in device:
-            continue
-        advertised_ssid = device['dot11.device'].get(
-            'dot11.device.advertised_ssid_map', [])
-        probed_ssid = device['dot11.device'].get(
-            'dot11.device.probed_ssid_map', [])
-
-        for ssid in advertised_ssid + probed_ssid:
-            crypt_string = ssid.get('dot11.advertisedssid.crypt_string', ssid.get(
-                'dot11.probedssid.crypt_string', 'Unknown'))
-            ht_mode = ssid.get('dot11.advertisedssid.ht_mode', ssid.get(
-                'dot11.probedssid.ht_mode', 'Unknown'))
-            protocols.append(crypt_string)
-            bandwidths.append(bandwidth_map.get(ht_mode, 'Unknown'))
-
-    # Count occurrences of protocols and bandwidths
-    protocol_counts = Counter(protocols)
-    bandwidth_counts = Counter(bandwidths)
+    # Extract protocols and bandwidths
+    protocol_counts, bandwidth_counts = extract_protocols_bandwidths(data)
 
     # Generate interactive graphs
     protocol_fig = px.pie(
         names=protocol_counts.keys(),
         values=protocol_counts.values(),
-        title="Authentication Protocols"
+        title="Encryption Protocols"
     )
 
     valid_bandwidths = {k: v for k,
                         v in bandwidth_counts.items() if k != 'Unknown'}
     valid_bandwidths_sorted = dict(sorted(valid_bandwidths.items()))
 
+    # Create a DataFrame for valid_bandwidths_sorted
+    bandwidth_df = pd.DataFrame(valid_bandwidths_sorted.items(), columns=[
+                                'Bandwidth (MHz)', 'Count'])
+
+    # Now create the bar chart using the DataFrame
     bandwidth_fig = px.bar(
-        x=list(valid_bandwidths_sorted.keys()),
-        y=list(valid_bandwidths_sorted.values()),
-        labels={"x": "Bandwidth (MHz)", "y": "Count"},
+        bandwidth_df,
+        x='Bandwidth (MHz)',  # Specify the column name for the x-axis
+        y='Count',  # Specify the column name for the y-axis
+        labels={"Bandwidth (MHz)": "Bandwidth (MHz)", "Count": "Count"},
         title="Bandwidth Distribution"
     )
 
@@ -143,10 +119,9 @@ def index():
 
     # Generate the map
     coordinates = [
-        (loc["kismet.common.location.avg_loc"]
-         ["kismet.common.location.geopoint"])
-        for device in data if "kismet.device.base.location" in device
-        for loc in [device["kismet.device.base.location"]]
+        # Directly access the 'location' field, which contains [longitude, latitude]
+        device["location"]
+        for device in data if "location" in device
     ]
 
     if not coordinates:
