@@ -1,32 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Wardriving Data</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
       rel="stylesheet"
     />
-</head>
-<body>
+  </head>
+  <body>
     <header>
-        <h1>Wardriving Data</h1>
+      <h1>Wardriving Data</h1>
     </header>
     <main>
-        <section>
-            <h2>Authentication Protocols</h2>
-            <iframe src="{{ url_for('static', filename='protocol_chart.html') }}" width="100%" height="600"></iframe>
-        </section>
-        <section>
-            <h2>Bandwidth Distribution</h2>
-            <iframe src="{{ url_for('static', filename='bandwidth_chart.html') }}" width="100%" height="600"></iframe>
-        </section>
-        <section>
-            <h2>Devices Map</h2>
-            <iframe src="{{ url_for('static', filename='map.html') }}" width="100%" height="600"></iframe>
-        </section>
+      <section>
+        <h2>Authentication Protocols</h2>
+        <iframe
+          src="{{ url_for('static', filename='protocols.html') }}"
+          width="100%"
+          height="600"
+        ></iframe>
+      </section>
+      <section>
+        <h2>Bandwidth Distribution</h2>
+        <iframe
+          src="{{ url_for('static', filename='bandwidths.html') }}"
+          width="100%"
+          height="600"
+        ></iframe>
+      </section>
+      <section>
+        <h2>Devices Map</h2>
+        <iframe
+          src="{{ url_for('static', filename='map.html') }}"
+          width="100%"
+          height="600"
+        ></iframe>
+      </section>
     </main>
   </body>
 </html>

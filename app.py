@@ -7,6 +7,9 @@ import plotly.io as pio
 import plotly.express as px
 import json
 from flask import Flask, render_template
+import os
+from geopy.distance import geodesic
+from collections import Counter
 
 
 app = Flask(__name__)
@@ -14,13 +17,51 @@ app = Flask(__name__)
 # Configure Flask-Caching
 cache = Cache(app, config={'CACHE_TYPE': 'SimpleCache'})
 
-# Helper function to load data lazily
+# Helper function to load all JSON files from the 'data' folder
 
 
 def load_data():
-    with open('data/devices-GPS.json', 'r') as file:
-        parser = ijson.items(file, "item")
-        return [item for item in parser]
+    data = []
+    data_folder = 'cleaned_data'
+    # Load each JSON file in the 'data' folder
+    for filename in os.listdir(data_folder):
+        if filename.endswith('.json'):
+            file_path = os.path.join(data_folder, filename)
+            with open(file_path, 'r') as file:
+                try:
+                    file_data = json.load(file)
+                    if isinstance(file_data, list):
+                        data.extend(file_data)
+                    elif isinstance(file_data, dict):
+                        data.append(file_data)
+                except json.JSONDecodeError as e:
+                    print(f"Error reading {filename}: {e}")
+    return data
+
+# Helper function to extract routes from each file
+
+
+def extract_route(data):
+    route = []
+    previous_point = None
+    for device in data:
+        try:
+            location = device["kismet.device.base.location"]["kismet.common.location.avg_loc"]["kismet.common.location.geopoint"]
+            lat, lon = location[1], location[0]
+            if -90 <= lat <= 90 and -180 <= lon <= 180:
+                current_point = (lat, lon)
+                if previous_point:
+                    distance = geodesic(
+                        previous_point, current_point).kilometers
+                    if distance > 50:  # Filter out jumps larger than 50 km
+                        print(
+                            f"Invalid jump from {previous_point} to {current_point} ({distance:.2f} km)")
+                        continue
+                route.append(current_point)
+                previous_point = current_point
+        except KeyError:
+            continue
+    return route
 
 # Route for the main page with graphs and map
 
@@ -89,9 +130,16 @@ def index():
         showlegend=False,
     )
 
-    # Embed charts directly into the HTML template
-    protocol_chart = protocol_fig.to_html(full_html=False)
-    bandwidth_chart = bandwidth_fig.to_html(full_html=False)
+    # Save the charts as HTML files
+    protocol_chart_filename = 'static/protocols.html'
+    bandwidth_chart_filename = 'static/bandwidths.html'
+
+    protocol_fig.write_html(protocol_chart_filename)
+    bandwidth_fig.write_html(bandwidth_chart_filename)
+
+    # Embed chart paths in the template
+    protocol_chart = protocol_chart_filename
+    bandwidth_chart = bandwidth_chart_filename
 
     # Generate the map
     coordinates = [
