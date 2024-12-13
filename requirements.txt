@@ -2,3 +2,5 @@ flask
 plotly
 pandas
 folium
+flask_caching
+geopy
