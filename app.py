@@ -147,7 +147,6 @@ def index():
         title="Encryption Methods"
     )
     
-    
     # Generate the channel bar chart
     channel_fig = px.bar(
         x=list(channel_counts.keys()),
@@ -173,27 +172,34 @@ def index():
     encryption_chart = encryption_chart_filename
     channel_chart = channel_chart_filename
     
-
-    # Generate the map
+    # Generate the map with SSID on hover
     coordinates = [
-        device["location"]
-        for device in data if "location" in device
+        device for device in data if "location" in device and "ssid" in device
     ]
 
     if not coordinates:
         return "No coordinates found in the data."
 
     map_center = [
-        sum(coord[1] for coord in coordinates) / len(coordinates),
-        sum(coord[0] for coord in coordinates) / len(coordinates)
+        sum(coord["location"][1] for coord in coordinates) / len(coordinates),
+        sum(coord["location"][0] for coord in coordinates) / len(coordinates)
     ]
 
     mymap = folium.Map(location=map_center, zoom_start=15)
     marker_cluster = MarkerCluster().add_to(mymap)
 
-    for coord in coordinates:
-        folium.Marker(location=[coord[1], coord[0]]).add_to(marker_cluster)
+    for device in coordinates:
+        location = device["location"]
+        ssid = device.get("ssid", "Unknown SSID")  # Get SSID, or default to 'Unknown SSID'
+        
+        # Create a tooltip to show SSID on hover
+        tooltip = folium.Tooltip(ssid)
+        folium.Marker(
+            location=[location[1], location[0]],  # Latitude, Longitude
+            tooltip=tooltip
+        ).add_to(marker_cluster)
 
+    # Save map to file
     map_filename = 'static/map.html'
     mymap.save(map_filename)
 
