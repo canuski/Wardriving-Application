@@ -16,9 +16,10 @@ app = Flask(__name__)
 # Configure Flask-Caching
 cache = Cache(app, config={'CACHE_TYPE': 'SimpleCache'})
 
+json_fix.clean_json('data', 'cleaned_data')
+
 # Helper function to load all JSON files from the 'cleaned_data' folder
 def load_data():
-    json_fix.clean_json('data', 'cleaned_data')
     data = []
     data_folder = 'cleaned_data'  # Folder where cleaned JSON files are saved
     for filename in os.listdir(data_folder):

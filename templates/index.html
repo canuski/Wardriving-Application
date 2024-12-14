@@ -33,10 +33,13 @@
           width="100%"
           height="600"
         ></iframe>
-        <!-- Button to go to the encryption details page -->
-        <a href="{{ url_for('encryption_details') }}">
-          <button>Learn More About Encryption Protocols</button>
-        </a>
+        
+        <!-- Move the button container inside this section -->
+        <div class="button-container">
+          <a href="{{ url_for('encryption_details') }}">
+            <button class="learn-more-button">Learn More About Encryption Protocols</button>
+          </a>
+        </div>
       </section>
       <section>
         <h2>Bandwidth Distribution</h2>

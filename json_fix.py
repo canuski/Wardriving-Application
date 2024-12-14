@@ -57,7 +57,6 @@ def clean_json(input_folder, output_folder):
         with open(output_file, 'w') as file:
             json.dump(cleaned_data, file, indent=4)
 
-        print(f"Cleaned data saved to {output_file}")
 
 
 # Specify input and output folder paths

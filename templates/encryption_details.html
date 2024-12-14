@@ -6,13 +6,13 @@
         <title>Wardriving Data</title>
         <link
           rel="stylesheet"
-          href="{{ url_for('static', filename='styles.css') }}"
+          href="{{ url_for('static', filename='encryption.css') }}"
         />
         <link
           href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
           rel="stylesheet"
         />
-      </head>
+    </head>
 <body>
     <h1>Encryption Methods</h1>
 
@@ -33,6 +33,9 @@
         {% endfor %}
     </ul>
 
-    <a href="/">Back to Home</a>
+    <!-- Add a container for centering the button -->
+    <div class="button-container">
+        <a href="/">Back to Home</a>
+    </div>    
 </body>
 </html>

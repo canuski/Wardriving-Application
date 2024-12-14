@@ -58,6 +58,8 @@ section {
   align-items: flex-start;
   gap: 2rem; /* Space between graph containers */
   padding: 1rem 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Light shadow for better visuals */
 }
 
 /* Graph Container Styling */
@@ -84,13 +86,46 @@ section {
   font-weight: bold;
 }
 
+.button-container {
+  display: flex;
+  justify-content: center; /* Center the button within the section */
+  margin-top: 1.5rem; /* Space above the button */
+  margin-bottom: 1.5rem; /* Optional, space below the button */
+}
+
+/* Learn More Button Adjustments */
+.learn-more-button {
+  padding: 1rem 2.5rem;
+  background: linear-gradient(90deg, #4a90e2, #5ba4e6); /* Gradient button */
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+  transition: background-color 0.3s, transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+}
+
+/* Hover and Active State Adjustments */
+.learn-more-button:hover {
+  background: #5ba4e6;
+  transform: translateY(-2px); /* Slight lift on hover */
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3); /* Enhanced shadow */
+}
+
+.learn-more-button:active {
+  background: #4a90e2; /* Darken on click */
+  transform: translateY(2px); /* Pressed effect */
+}
+
 /* Embedded Graph Styling */
 iframe {
   width: 100%; /* Full width of the container */
   height: 350px; /* Compact height */
   border: none;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Light shadow for better visuals */
+  
 }
 
 /* Footer Styling */
@@ -143,16 +178,6 @@ footer a:hover {
   }
 
   header h1 {
-    font-size: 2rem; /* Smaller font for smaller screens */
-  }
-}
-
-@media (max-width: 480px) {
-  main {
-    padding: 1rem;
-  }
-
-  footer {
-    font-size: 0.8rem;
+    font-size: 2rem; /* Adjust header font size */
   }
 }
