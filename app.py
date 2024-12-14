@@ -77,6 +77,20 @@ def extract_encryption_methods(data):
 
     return encryption_counts
 
+# Helper function to extract and count channels
+def extract_channels(data):
+    channels = []
+
+    for device in data:
+        channel = device.get("channel", "Unknown")
+        if channel != "Unknown":
+            channels.append(channel)
+
+    # Count occurrences of channels
+    channel_counts = Counter(channels)
+
+    return channel_counts
+
 # Route for the main page with graphs and map
 @app.route('/')
 @cache.cached(timeout=300)  # Cache results for 5 minutes
@@ -89,6 +103,9 @@ def index():
 
     # Extract encryption methods
     encryption_counts = extract_encryption_methods(data)
+    
+    # Extract channels
+    channel_counts = extract_channels(data)
 
     # Generate interactive graphs
     protocol_fig = px.pie(
@@ -129,20 +146,33 @@ def index():
         values=encryption_counts.values(),
         title="Encryption Methods"
     )
+    
+    
+    # Generate the channel bar chart
+    channel_fig = px.bar(
+        x=list(channel_counts.keys()),
+        y=list(channel_counts.values()),
+        labels={"x": "Channel", "y": "Count"},
+        title="Channel Distribution"
+    )
 
     # Save the charts as HTML files
     protocol_chart_filename = 'static/protocols.html'
     bandwidth_chart_filename = 'static/bandwidths.html'
     encryption_chart_filename = 'static/encryption.html'
+    channel_chart_filename = 'static/channels.html'
 
     protocol_fig.write_html(protocol_chart_filename)
     bandwidth_fig.write_html(bandwidth_chart_filename)
     encryption_fig.write_html(encryption_chart_filename)
-
+    channel_fig.write_html(channel_chart_filename)
+    
     # Embed chart paths in the template
     protocol_chart = protocol_chart_filename
     bandwidth_chart = bandwidth_chart_filename
     encryption_chart = encryption_chart_filename
+    channel_chart = channel_chart_filename
+    
 
     # Generate the map
     coordinates = [
@@ -167,7 +197,7 @@ def index():
     map_filename = 'static/map.html'
     mymap.save(map_filename)
 
-    return render_template('index.html', protocol_chart=protocol_chart, bandwidth_chart=bandwidth_chart, encryption_chart=encryption_chart, map_file=map_filename)
+    return render_template('index.html', protocol_chart=protocol_chart, bandwidth_chart=bandwidth_chart, encryption_chart=encryption_chart, channel_chart=channel_chart, map_file=map_filename)
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000, debug=True)
