@@ -17,13 +17,10 @@ app = Flask(__name__)
 cache = Cache(app, config={'CACHE_TYPE': 'SimpleCache'})
 
 # Helper function to load all JSON files from the 'cleaned_data' folder
-
-
 def load_data():
     json_fix.clean_json('data', 'cleaned_data')
     data = []
     data_folder = 'cleaned_data'  # Folder where cleaned JSON files are saved
-    # Load each JSON file in the 'data' folder
     for filename in os.listdir(data_folder):
         if filename.endswith('.json'):
             file_path = os.path.join(data_folder, filename)
@@ -38,10 +35,9 @@ def load_data():
                     print(f"Error reading {filename}: {e}")
     return data
 
-# Helper function to extract protocols and bandwidths
-
-
+# Helper function to filter encryption protocols and extract bandwidths
 def extract_protocols_bandwidths(data):
+    valid_protocols = ["WPA2", "WPA3", "WEP", "WPA", "OPEN"]
     protocols = []
     bandwidths = []
 
@@ -49,8 +45,12 @@ def extract_protocols_bandwidths(data):
         encryption = device.get("encryption", "Unknown")
         bandwidth = device.get("bandwidth", "Unknown")
 
-        # Add the encryption protocol (assuming 'encryption' can have multiple values)
-        protocols.append(encryption)
+        # Filter encryption protocols to include only valid protocols
+        filtered_protocol = [proto for proto in valid_protocols if proto in encryption.upper()]
+        if filtered_protocol:
+            protocols.append(filtered_protocol[0])  # Take the first matching protocol
+        else:
+            protocols.append("Other")
 
         # Add the bandwidth (HT40, HT80, etc.)
         bandwidths.append(bandwidth)
@@ -61,9 +61,23 @@ def extract_protocols_bandwidths(data):
 
     return protocol_counts, bandwidth_counts
 
+# Helper function to extract encryption methods
+def extract_encryption_methods(data):
+    encryption_methods = []
+
+    for device in data:
+        encryption = device.get("encryption", "Unknown")
+        if encryption != "Unknown":
+            # Extract the encryption methods from the string
+            encryption_parts = encryption.split(" ")
+            encryption_methods.extend([part for part in encryption_parts if part not in ["WPA2", "WPA3", "WEP", "WPA", "OPEN"]])
+
+    # Count occurrences of encryption methods
+    encryption_counts = Counter(encryption_methods)
+
+    return encryption_counts
+
 # Route for the main page with graphs and map
-
-
 @app.route('/')
 @cache.cached(timeout=300)  # Cache results for 5 minutes
 def index():
@@ -73,26 +87,28 @@ def index():
     # Extract protocols and bandwidths
     protocol_counts, bandwidth_counts = extract_protocols_bandwidths(data)
 
+    # Extract encryption methods
+    encryption_counts = extract_encryption_methods(data)
+
     # Generate interactive graphs
     protocol_fig = px.pie(
         names=protocol_counts.keys(),
         values=protocol_counts.values(),
-        title="Encryption Protocols"
+        title="Authentication Protocols"
     )
 
-    valid_bandwidths = {k: v for k,
-                        v in bandwidth_counts.items() if k != 'Unknown'}
+    valid_bandwidths = {k: v for k, v in bandwidth_counts.items() if k != 'Unknown'}
     valid_bandwidths_sorted = dict(sorted(valid_bandwidths.items()))
 
     # Create a DataFrame for valid_bandwidths_sorted
     bandwidth_df = pd.DataFrame(valid_bandwidths_sorted.items(), columns=[
-                                'Bandwidth (MHz)', 'Count'])
+        'Bandwidth (MHz)', 'Count'])
 
     # Now create the bar chart using the DataFrame
     bandwidth_fig = px.bar(
         bandwidth_df,
-        x='Bandwidth (MHz)',  # Specify the column name for the x-axis
-        y='Count',  # Specify the column name for the y-axis
+        x='Bandwidth (MHz)',
+        y='Count',
         labels={"Bandwidth (MHz)": "Bandwidth (MHz)", "Count": "Count"},
         title="Bandwidth Distribution"
     )
@@ -108,20 +124,28 @@ def index():
         showlegend=False,
     )
 
+    encryption_fig = px.pie(
+        names=encryption_counts.keys(),
+        values=encryption_counts.values(),
+        title="Encryption Methods"
+    )
+
     # Save the charts as HTML files
     protocol_chart_filename = 'static/protocols.html'
     bandwidth_chart_filename = 'static/bandwidths.html'
+    encryption_chart_filename = 'static/encryption.html'
 
     protocol_fig.write_html(protocol_chart_filename)
     bandwidth_fig.write_html(bandwidth_chart_filename)
+    encryption_fig.write_html(encryption_chart_filename)
 
     # Embed chart paths in the template
     protocol_chart = protocol_chart_filename
     bandwidth_chart = bandwidth_chart_filename
+    encryption_chart = encryption_chart_filename
 
     # Generate the map
     coordinates = [
-        # Directly access the 'location' field, which contains [longitude, latitude]
         device["location"]
         for device in data if "location" in device
     ]
@@ -143,8 +167,7 @@ def index():
     map_filename = 'static/map.html'
     mymap.save(map_filename)
 
-    return render_template('index.html', protocol_chart=protocol_chart, bandwidth_chart=bandwidth_chart, map_file=map_filename)
-
+    return render_template('index.html', protocol_chart=protocol_chart, bandwidth_chart=bandwidth_chart, encryption_chart=encryption_chart, map_file=map_filename)
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000, debug=True)
