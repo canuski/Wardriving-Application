@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, url_for
 from flask_caching import Cache
 import plotly.io as pio
 import plotly.express as px
@@ -204,6 +204,35 @@ def index():
     mymap.save(map_filename)
 
     return render_template('index.html', protocol_chart=protocol_chart, bandwidth_chart=bandwidth_chart, encryption_chart=encryption_chart, channel_chart=channel_chart, map_file=map_filename)
+
+@app.route('/encryption_details')
+def encryption_details():
+    # Laad de JSON-data opnieuw (of sla deze op indien je de data niet steeds opnieuw wilt laden)
+    data = load_data()
+
+    # Extract encryption methods
+    encryption_counts = extract_encryption_methods(data)
+
+    # Maak de informatie die je wilt weergeven op de pagina
+    encryption_info = {
+        "AES-CCMP": "AES-CCMP is a strong encryption used in WPA2 and WPA3 networks.",
+        "WPA2-PSK": "WPA2 with Pre-Shared Key (PSK) is a common security method for home networks.",
+        "Open": "An open network without encryption, often used for public hotspots.",
+        "WPA3-PSK": "The latest version of WPA, with improved security over WPA2.",
+        "TKIP": "An outdated encryption method, often replaced by AES in modern networks.",
+        "WPA2 - EAP-FT": "WPA2 with Extensible Authentication Protocol (EAP) for enterprise networks.",
+        "WPA1": "The first version of WPA, now considered outdated and less secure.",
+        "WPA1-PSK": "WPA1 with a shared key.",
+        "WPA-PSK": "Another variant of WPA with Pre-Shared Key, often used in home networks.",
+        "AES-BIP-CMAC256": "A cryptographic method that may be used for security in certain networks.",
+    }
+
+    # Return the rendered template with the necessary data
+    return render_template('encryption_details.html', 
+                       encryption_counts=encryption_counts, 
+                       encryption_info=encryption_info,
+                       encryption_chart=url_for('static', filename='encryption.html'))  # path to the previously generated chart
+
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000, debug=True)
