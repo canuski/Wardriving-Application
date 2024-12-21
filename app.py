@@ -135,7 +135,6 @@ def index():
     provider_layers = {}
 
     # Define icons path
-    import os
     icons_path = os.path.join(os.getcwd(), 'static/icons')
 
     for device in coordinates:
@@ -249,7 +248,6 @@ def index():
     )
 
 
-
 @app.route('/encryption_details')
 def encryption_details():
     data = load_data()
@@ -278,6 +276,71 @@ def encryption_details():
         encryption_info=encryption_info,
         encryption_chart=url_for('static', filename='encryption.html')
     )
+
+
+@app.route('/bandwidth_details')
+def bandwidth_details():
+    data = load_data()
+    
+    # Extract bandwidth data
+    _, bandwidth_counts = extract_protocols_bandwidths(data)
+    
+    # Bandwidth explanations and WiFi standards
+    bandwidth_info = {
+        "HT160": {
+            "standard": "WiFi 6 (802.11ax) or newer",
+            "description": "160 MHz channel width, offering the highest throughput. This bandwidth is only available in WiFi 6 (802.11ax) and newer standards.",
+            "theoretical_speed": "Up to 9.6 Gbps (WiFi 6)",
+            "use_case": "Ideal for high-density environments, gaming, and 4K/8K streaming"
+        },
+        "HT80": {
+            "standard": "WiFi 5 (802.11ac) or newer",
+            "description": "80 MHz channel width, providing high throughput. Available in WiFi 5 (802.11ac) and newer standards.",
+            "theoretical_speed": "Up to 3.5 Gbps (WiFi 5)",
+            "use_case": "Suitable for multiple HD streams and gaming"
+        },
+        "HT40": {
+            "standard": "WiFi 4 (802.11n) or newer",
+            "description": "40 MHz channel width. Available since WiFi 4, but also used in WiFi 5 and 6. When seen in newer networks, it might indicate a compatibility mode or congested environment.",
+            "theoretical_speed": "Up to 600 Mbps (WiFi 4)",
+            "use_case": "Good for general use and HD streaming"
+        },
+        "HT20": {
+            "standard": "WiFi 4 (802.11n) or newer",
+            "description": "20 MHz channel width. The base channel width available in all modern WiFi standards. When seen in newer networks, it might indicate high density environments or compatibility mode.",
+            "theoretical_speed": "Up to 150 Mbps (WiFi 4)",
+            "use_case": "Basic internet usage and compatibility"
+        }
+    }
+    
+    # WiFi standard summary
+    wifi_standards = {
+        "WiFi 6 (802.11ax)": {
+            "bandwidths": ["HT20", "HT40", "HT80", "HT160"],
+            "year": "2019",
+            "key_features": "OFDMA, BSS Coloring, Target Wake Time"
+        },
+        "WiFi 5 (802.11ac)": {
+            "bandwidths": ["HT20", "HT40", "HT80"],
+            "year": "2014",
+            "key_features": "MU-MIMO, Beamforming"
+        },
+        "WiFi 4 (802.11n)": {
+            "bandwidths": ["HT20", "HT40"],
+            "year": "2009",
+            "key_features": "MIMO, Frame Aggregation"
+        }
+    }
+    
+    # Return the rendered template with bandwidth details
+    return render_template(
+        'bandwidth_details.html',
+        bandwidth_counts=bandwidth_counts,
+        bandwidth_info=bandwidth_info,
+        wifi_standards=wifi_standards,
+        bandwidth_chart=url_for('static', filename='bandwidths.html')
+    )
+
 
 @app.route('/heatmap')
 def heatmap():
@@ -313,6 +376,7 @@ def heatmap():
     except Exception as e:
         print(f"Error saving heatmap HTML file: {e}")
         return "Error generating heatmap."
+
 
     # Render heatmap template
     return render_template('heatmap.html', heatmap_file='heatmap.html')

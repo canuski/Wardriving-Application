@@ -19,12 +19,13 @@
         <h1>Encryption Methods</h1>
     </header>
     <nav class="navbar">
-      <ul>
-          <li><a href="/" class="{% if request.path == '/' %}active{% endif %}">Home</a></li>
-          <li><a href="/encryption_details" class="{% if request.path == '/encryption_details' %}active{% endif %}">Encryption Methods</a></li>
-          <li><a href="/heatmap" class="{% if request.path == '/heatmap' %}active{% endif %}">Heatmap</a></li>
-      </ul>
-    </nav>
+        <ul>
+            <li><a href="/" class="{% if request.path == '/' %}active{% endif %}">Home</a></li>
+            <li><a href="/encryption_details" class="{% if request.path == '/encryption_details' %}active{% endif %}">Encryption Methods</a></li>
+            <li><a href="/heatmap" class="{% if request.path == '/heatmap' %}active{% endif %}">Heatmap</a></li>
+            <li><a href="/bandwidth_explanation" class="{% if request.path == '/bandwidth_explanation' %}active{% endif %}">Bandwidth Explanation</a></li>
+        </ul>
+      </nav>
 
     <!-- Encryption Protocol Chart -->
     <main>

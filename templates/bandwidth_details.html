@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bandwidth Explanation</title>
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='bandwidth.css') }}"
+    />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+        rel="stylesheet"
+    />
+</head>
+<body>
+    <!-- Header with Navbar -->
+    <header>
+        <h1>Bandwidth Explanation</h1>
+    </header>
+    <nav class="navbar">
+      <ul>
+          <li><a href="/" class="{% if request.path == '/' %}active{% endif %}">Home</a></li>
+          <li><a href="/encryption_details" class="{% if request.path == '/encryption_details' %}active{% endif %}">Encryption Methods</a></li>
+          <li><a href="/heatmap" class="{% if request.path == '/heatmap' %}active{% endif %}">Heatmap</a></li>
+          <li><a href="/bandwidth_explanation" class="{% if request.path == '/bandwidth_explanation' %}active{% endif %}">Bandwidth Explanation</a></li>
+      </ul>
+    </nav>
+
+    <!-- Bandwidth Chart -->
+    <main>
+        <section>
+            <h2>Bandwidth Information</h2>
+            <iframe
+                src="{{ url_for('static', filename='bandwidths.html') }}"
+                width="100%"
+                height="600"
+                style="border:none;"
+            ></iframe>
+        </section>
+
+        <!-- Explanation of Bandwidth Types -->
+        <section class="explaining">
+            <h2>Explanation of Bandwidth Types</h2>
+            <ul>
+                <li><strong>HT160:</strong> High Throughput 160 MHz is only available in Wi-Fi 6 (802.11ax) or newer.</li>
+                <li><strong>HT80:</strong> High Throughput 80 MHz is supported by Wi-Fi 5 (802.11ac) and Wi-Fi 6.</li>
+                <li><strong>HT40:</strong> High Throughput 40 MHz can be used by Wi-Fi 4 (802.11n) and Wi-Fi 5.</li>
+                <li><strong>HT20:</strong> High Throughput 20 MHz can be used by Wi-Fi 4 (802.11n) and Wi-Fi 5.</li>
+                <li><strong>Note:</strong> It is difficult to determine the exact Wi-Fi standard for HT20 and HT40 without additional information.</li>
+            </ul>
+        </section>
+    </main>
+</body>
+</html>
