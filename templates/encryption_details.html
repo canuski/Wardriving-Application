@@ -24,7 +24,8 @@
           <li><a href="/encryption_details" class="{% if request.path == '/encryption_details' %}active{% endif %}">Encryption Methods</a></li>
           <li><a href="/heatmap" class="{% if request.path == '/heatmap' %}active{% endif %}">Heatmap</a></li>
       </ul>
-  </nav>
+    </nav>
+
     <!-- Encryption Protocol Chart -->
     <main>
         <section>
@@ -38,7 +39,7 @@
         </section>
 
         <!-- Explanation of Encryption Protocols -->
-        <section>
+        <section class="explaining">
             <h2>Explanation of Encryption Protocols</h2>
             <ul>
                 {% for method, description in encryption_info.items() %}

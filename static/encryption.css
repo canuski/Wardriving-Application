@@ -94,7 +94,7 @@ h2 {
 }
 
 /* Explanation List Styling */
-ul {
+.explaining ul {
   list-style-type: none;
   padding: 0;
   margin: 2rem 0;
@@ -104,7 +104,7 @@ ul {
   gap: 1rem; /* Add some gap between list items */
 }
 
-ul li {
+.explaining ul li {
   background: #f7faff; /* Light blue card background for contrast */
   padding: 1rem 1.5rem; /* Adjusted padding for better balance */
   border-radius: 8px;
@@ -118,16 +118,16 @@ ul li {
   justify-content: center;
 }
 
-ul li:hover {
+.explaining ul li:hover {
   background-color: #e0f7ff; /* Lighten background on hover */
 }
 
-ul li strong {
+.explaining ul li strong {
   color: #4a90e2;
   font-weight: bold;
 }
 
-ul li p {
+.explaining ul li p {
   color: #555;
   margin-top: 0.5rem;
   text-align: justify; /* Justify the description text */

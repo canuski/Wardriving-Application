@@ -13,6 +13,7 @@
       rel="stylesheet"
     />
   </head>
+  
   <body>
     <header>
       <h1>Wardriving Data</h1>
@@ -24,7 +25,7 @@
           <li><a href="/encryption_details" class="{% if request.path == '/encryption_details' %}active{% endif %}">Encryption Methods</a></li>
           <li><a href="/heatmap" class="{% if request.path == '/heatmap' %}active{% endif %}">Heatmap</a></li>
       </ul>
-  </nav>
+    </nav>
 
     <main>
       <!-- Add summary cards -->
@@ -61,9 +62,9 @@
             height="350"
           ></iframe>
           <!-- Restore Learn More button -->
-          <div class="button-container">
+          <!-- <div class="button-container">
             <a href="/encryption_details" class="learn-more-button">Learn More About Encryption Protocols</a>
-          </div>
+          </div> -->
         </div>
       </section>
 
