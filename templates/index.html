@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wardriving Data</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header>
+      <h1>Wardriving Data</h1>
+    </header>
+
+    <nav class="navbar">
+      <ul>
+          <li><a href="/" class="{% if request.path == '/' %}active{% endif %}">Home</a></li>
+          <li><a href="/encryption_details" class="{% if request.path == '/encryption_details' %}active{% endif %}">Encryption Methods</a></li>
+          <li><a href="/heatmap" class="{% if request.path == '/heatmap' %}active{% endif %}">Heatmap</a></li>
+      </ul>
+  </nav>
+
+    <main>
+      <!-- Add summary cards -->
+      <div class="summary-cards">
+        <div class="card">
+          <h3>Total Devices</h3>
+          <p>{{ total_devices }}</p>
+        </div>
+        <div class="card">
+          <h3>Most Used Protocol</h3>
+          <p>{{ most_used_protocol }}</p>
+        </div>
+        <div class="card">
+          <h3>Most Popular Bandwidth</h3>
+          <p>{{ most_popular_bandwidth }}</p>
+        </div>
+      </div>
+
+      <section>
+        <div class="graph-container">
+          <h2>Authentication Protocols</h2>
+          <iframe
+            src="{{ url_for('static', filename=protocol_chart) }}"
+            width="100%"
+            height="350"
+          ></iframe>
+        </div>
+
+        <div class="graph-container">
+          <h2>Encryption Methods</h2>
+          <iframe
+            src="{{ url_for('static', filename=encryption_chart) }}"
+            width="100%"
+            height="350"
+          ></iframe>
+          <!-- Restore Learn More button -->
+          <div class="button-container">
+            <a href="/encryption_details" class="learn-more-button">Learn More About Encryption Protocols</a>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="graph-container">
+          <h2>Bandwidth Distribution</h2>
+          <iframe
+            src="{{ url_for('static', filename=bandwidth_chart) }}"
+            width="100%"
+            height="350"
+          ></iframe>
+        </div>
+
+        <div class="graph-container">
+          <h2>Channel Distribution</h2>
+          <iframe
+            src="{{ url_for('static', filename=channel_chart) }}"
+            width="100%"
+            height="350"
+          ></iframe>
+        </div>
+      </section>
+
+      <section>
+        <div class="graph-container">
+          <h2>Provider Distribution</h2>
+          <iframe
+            src="{{ url_for('static', filename=ssid_chart) }}"
+            width="100%"
+            height="350"
+          ></iframe>
+        </div>
+      </section>
+
+      <section>
+        <h2>Devices Map</h2>
+        <iframe
+          src="{{ url_for('static', filename=map_file) }}"
+          width="100%"
+          height="600"
+        ></iframe>
+      </section>
+    </main>
+
+    <footer>
+      <p>© 2024 Wardriving App</p>
+    </footer>
+  </body>
+</html>

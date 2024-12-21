@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Encryption Methods</title>
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='encryption.css') }}"
+    />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+        rel="stylesheet"
+    />
+</head>
+<body>
+    <!-- Header with Navbar -->
+    <header>
+        <h1>Encryption Methods</h1>
+    </header>
+    <nav class="navbar">
+      <ul>
+          <li><a href="/" class="{% if request.path == '/' %}active{% endif %}">Home</a></li>
+          <li><a href="/encryption_details" class="{% if request.path == '/encryption_details' %}active{% endif %}">Encryption Methods</a></li>
+          <li><a href="/heatmap" class="{% if request.path == '/heatmap' %}active{% endif %}">Heatmap</a></li>
+      </ul>
+  </nav>
+    <!-- Encryption Protocol Chart -->
+    <main>
+        <section>
+            <h2>Encryption Protocols</h2>
+            <iframe
+                src="{{ url_for('static', filename='encryption.html') }}"
+                width="100%"
+                height="600"
+                style="border:none;"
+            ></iframe>
+        </section>
+
+        <!-- Explanation of Encryption Protocols -->
+        <section>
+            <h2>Explanation of Encryption Protocols</h2>
+            <ul>
+                {% for method, description in encryption_info.items() %}
+                    <li><strong>{{ method }}:</strong> {{ description }}</li>
+                {% endfor %}
+            </ul>
+        </section>
+    </main>
+</body>
+</html>

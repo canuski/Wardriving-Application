@@ -1,0 +1,453 @@
+[
+    {
+        "ssid": "Audi_MMI_7682_5GHz",
+        "encryption": "WPA2 WPA2-PSK AES-CCMP",
+        "channel": "149",
+        "location": [
+            4.412319,
+            51.226403
+        ],
+        "bandwidth": "HT40+",
+        "signal-strength": -55
+    },
+    {
+        "ssid": "DIRECT-MBUX 62395",
+        "encryption": "WPA2 WPA2-PSK AES-CCMP",
+        "channel": "153",
+        "location": [
+            4.412335,
+            51.226362
+        ],
+        "bandwidth": "HT80",
+        "signal-strength": -63
+    },
+    {
+        "ssid": "Audi_MMI_4339_5GHz",
+        "encryption": "WPA2 WPA2-PSK AES-CCMP",
+        "channel": "149",
+        "location": [
+            4.413882,
+            51.225966
+        ],
+        "bandwidth": "HT40+",
+        "signal-strength": -69
+    },
+    {
+        "ssid": "DIRECT-BMW 76994",
+        "encryption": "WPA2 WPA2-PSK AES-CCMP",
+        "channel": "157",
+        "location": [
+            4.414077,
+            51.225978
+        ],
+        "bandwidth": "HT80",
+        "signal-strength": -57
+    },
+    {
+        "ssid": "My Skoda 6341",
+        "encryption": "WPA2 WPA2-PSK AES-CCMP",
+        "channel": "153",
+        "location": [
+            4.414105,
+            51.225979
+        ],
+        "bandwidth": "HT40-",
+        "signal-strength": -59
+    },
+    {
+        "ssid": "DIRECT-MBUX 69857",
+        "encryption": "WPA2 WPA2-PSK AES-CCMP",
+        "channel": "161",
+        "location": [
+            4.414177,
+            51.225985
+        ],
+        "bandwidth": "HT80",
+        "signal-strength": -62
+    },
+    {
+        "ssid": "TAYCAN_9359_5GHz",
+        "encryption": "WPA2 WPA2-PSK AES-CCMP",
+        "channel": "149",
+        "location": [
+            4.414374,
+            51.225817
+        ],
+        "bandwidth": "HT40+",
+        "signal-strength": -55
+    },
+    {
+        "ssid": "My VW 1305",
+        "encryption": "WPA2 WPA2-PSK AES-CCMP",
+        "channel": "153",
+        "location": [
+            4.415111,
+            51.224757
+        ],
+        "bandwidth": "HT40-",
+        "signal-strength": -67
+    },
+    {
+        "ssid": "A25 van Mohammad",
+        "encryption": "WPA2 WPA2-PSK AES-CCMP",
+        "channel": "149",
+        "location": [
+            4.415096,
+            51.224683
+        ],
+        "bandwidth": "HT80",
+        "signal-strength": -54
+    },
+    {
+        "ssid": "DIRECT-MBUX 16515",
+        "encryption": "WPA2 WPA2-PSK AES-CCMP",
+        "channel": "153",
+        "location": [
+            4.415004,
+            51.224667
+        ],
+        "bandwidth": "HT80",
+        "signal-strength": -49
+    },
+    {
+        "ssid": "Land Rover Dashcam 34628F",
+        "encryption": "WPA2 WPA2-PSK AES-CCMP",
+        "channel": "149",
+        "location": [
+            4.414573,
+            51.224702
+        ],
+        "bandwidth": "HT80",
+        "signal-strength": -40
+    },
+    {
+        "ssid": "LR217138",
+        "encryption": "WPA2 WPA2-PSK AES-CCMP",
+        "channel": "149",
+        "location": [
+            4.414589,
+            51.224718
+        ],
+        "bandwidth": "HT80",
+        "signal-strength": -58
+    },
+    {
+        "ssid": "Audi_MMI_290_5GHz",
+        "encryption": "WPA2 WPA2-PSK AES-CCMP",
+        "channel": "149",
+        "location": [
+            4.414095,
+            51.224742
+        ],
+        "bandwidth": "HT40+",
+        "signal-strength": -69
+    },
+    {
+        "ssid": "RR214275",
+        "encryption": "WPA2 WPA2-PSK AES-CCMP",
+        "channel": "149",
+        "location": [
+            4.413953,
+            51.224732
+        ],
+        "bandwidth": "HT80",
+        "signal-strength": -66
+    },
+    {
+        "ssid": "UAntwerpen",
+        "encryption": "WPA2 WPA2-EAP WPA2-EAP-FT AES-CCMP",
+        "channel": "161",
+        "location": [
+            4.414012,
+            51.224732
+        ],
+        "bandwidth": "HT40-",
+        "signal-strength": -65
+    },
+    {
+        "ssid": "eduroam",
+        "encryption": "WPA2 WPA2-EAP AES-CCMP",
+        "channel": "161",
+        "location": [
+            4.414012,
+            51.224732
+        ],
+        "bandwidth": "HT40-",
+        "signal-strength": -64
+    },
+    {
+        "ssid": "UA-infra",
+        "encryption": "Open",
+        "channel": "161",
+        "location": [
+            4.414012,
+            51.224732
+        ],
+        "bandwidth": "HT40-",
+        "signal-strength": -65
+    },
+    {
+        "ssid": "UA-guest",
+        "encryption": "Open",
+        "channel": "161",
+        "location": [
+            4.414012,
+            51.224732
+        ],
+        "bandwidth": "HT40-",
+        "signal-strength": -65
+    },
+    {
+        "ssid": "UAntwerpen",
+        "encryption": "WPA2 WPA2-EAP WPA2-EAP-FT AES-CCMP",
+        "channel": "153",
+        "location": [
+            4.413559,
+            51.22485
+        ],
+        "bandwidth": "HT40-",
+        "signal-strength": -58
+    },
+    {
+        "ssid": "UA-infra",
+        "encryption": "Open",
+        "channel": "153",
+        "location": [
+            4.413559,
+            51.22485
+        ],
+        "bandwidth": "HT40-",
+        "signal-strength": -58
+    },
+    {
+        "ssid": "UA-guest",
+        "encryption": "Open",
+        "channel": "153",
+        "location": [
+            4.41348,
+            51.2249
+        ],
+        "bandwidth": "HT40-",
+        "signal-strength": -58
+    },
+    {
+        "ssid": "eduroam",
+        "encryption": "WPA2 WPA2-EAP AES-CCMP",
+        "channel": "153",
+        "location": [
+            4.41348,
+            51.2249
+        ],
+        "bandwidth": "HT40-",
+        "signal-strength": -58
+    },
+    {
+        "ssid": "DIRECT-MBUX 79366",
+        "encryption": "WPA2 WPA2-PSK AES-CCMP",
+        "channel": "153",
+        "location": [
+            4.412302,
+            51.225014
+        ],
+        "bandwidth": "HT80",
+        "signal-strength": -53
+    },
+    {
+        "ssid": "My Skoda 0672",
+        "encryption": "WPA2 WPA2-PSK AES-CCMP",
+        "channel": "153",
+        "location": [
+            4.41165,
+            51.225153
+        ],
+        "bandwidth": "HT40-",
+        "signal-strength": -62
+    },
+    {
+        "ssid": "DIRECT-DKITF-MAVANO-LTStZJ",
+        "encryption": "WPA2 WPA2-PSK AES-CCMP",
+        "channel": "149",
+        "location": [
+            4.41136,
+            51.225172
+        ],
+        "bandwidth": "HT20",
+        "signal-strength": -71
+    },
+    {
+        "ssid": "HH-DJ",
+        "encryption": "WPA3 WPA3-PSK WPA3-SAE AES-CCMP",
+        "channel": "149",
+        "location": [
+            4.409867,
+            51.225224
+        ],
+        "bandwidth": "HT80",
+        "signal-strength": -50
+    },
+    {
+        "ssid": "Trivec79",
+        "encryption": "WPA2 WPA2-PSK AES-CCMP",
+        "channel": "149",
+        "location": [
+            4.409872,
+            51.225225
+        ],
+        "bandwidth": "HT80",
+        "signal-strength": -49
+    },
+    {
+        "ssid": "Hessenhuis-Guest",
+        "encryption": "WPA3 WPA3-PSK WPA3-SAE AES-CCMP",
+        "channel": "149",
+        "location": [
+            4.409839,
+            51.225217
+        ],
+        "bandwidth": "HT80",
+        "signal-strength": -50
+    },
+    {
+        "ssid": "CityCubes",
+        "encryption": "WPA2 WPA2-PSK AES-CCMP",
+        "channel": "149",
+        "location": [
+            4.409991,
+            51.225249
+        ],
+        "bandwidth": "HT40+",
+        "signal-strength": -58
+    },
+    {
+        "ssid": "CLOUDMEN Support",
+        "encryption": "WPA2 WPA2-PSK AES-CCMP",
+        "channel": "149",
+        "location": [
+            4.409991,
+            51.225249
+        ],
+        "bandwidth": "HT40+",
+        "signal-strength": -61
+    },
+    {
+        "ssid": "Hessenhuis",
+        "encryption": "Open",
+        "channel": "149",
+        "location": [
+            4.409828,
+            51.225215
+        ],
+        "bandwidth": "HT80",
+        "signal-strength": -50
+    },
+    {
+        "ssid": "CLOUDMEN Support",
+        "encryption": "WPA2 WPA2-PSK AES-CCMP",
+        "channel": "149",
+        "location": [
+            4.410006,
+            51.225252
+        ],
+        "bandwidth": "HT40+",
+        "signal-strength": -66
+    },
+    {
+        "ssid": "CityCubes",
+        "encryption": "WPA2 WPA2-PSK AES-CCMP",
+        "channel": "149",
+        "location": [
+            4.409971,
+            51.225247
+        ],
+        "bandwidth": "HT40+",
+        "signal-strength": -67
+    },
+    {
+        "ssid": "Lambda",
+        "encryption": "WPA2 WPA2-PSK AES-CCMP",
+        "channel": "149",
+        "location": [
+            4.409804,
+            51.22521
+        ],
+        "bandwidth": "HT80",
+        "signal-strength": -51
+    },
+    {
+        "ssid": "Audi_MMI_2042_5GHz",
+        "encryption": "WPA2 WPA2-PSK AES-CCMP",
+        "channel": "149",
+        "location": [
+            4.409083,
+            51.225126
+        ],
+        "bandwidth": "HT40+",
+        "signal-strength": -71
+    },
+    {
+        "ssid": "Cuperus Horsey",
+        "encryption": "Open",
+        "channel": "149",
+        "location": [
+            4.409269,
+            51.225145
+        ],
+        "bandwidth": "HT80",
+        "signal-strength": -46
+    },
+    {
+        "ssid": "Koverim horsey",
+        "encryption": "WPA2 WPA2-PSK AES-CCMP",
+        "channel": "149",
+        "location": [
+            4.409095,
+            51.225147
+        ],
+        "bandwidth": "HT80",
+        "signal-strength": -46
+    },
+    {
+        "ssid": "D1m5nS10n-XPSR400",
+        "encryption": "WPA2 WPA2-PSK AES-CCMP",
+        "channel": "161",
+        "location": [
+            4.408323,
+            51.225115
+        ],
+        "bandwidth": "HT40-",
+        "signal-strength": -70
+    },
+    {
+        "ssid": "2SLR2",
+        "encryption": "WPA2 WPA2-PSK AES-CCMP",
+        "channel": "161",
+        "location": [
+            4.407358,
+            51.225329
+        ],
+        "bandwidth": "HT40-",
+        "signal-strength": -53
+    },
+    {
+        "ssid": "2SLR2",
+        "encryption": "WPA2 WPA2-PSK AES-CCMP",
+        "channel": "149",
+        "location": [
+            4.407341,
+            51.225338
+        ],
+        "bandwidth": "HT40+",
+        "signal-strength": -64
+    },
+    {
+        "ssid": "2SLR2",
+        "encryption": "WPA2 WPA2-PSK AES-CCMP",
+        "channel": "149",
+        "location": [
+            4.407317,
+            51.225352
+        ],
+        "bandwidth": "HT40+",
+        "signal-strength": -70
+    }
+]
