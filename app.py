@@ -341,6 +341,35 @@ def bandwidth_details():
         bandwidth_chart=url_for('static', filename='bandwidths.html')
     )
 
+@app.route('/channels_info')
+def channels_info():
+    # Channel information dictionary
+    channel_info = {
+        "2.4 GHz": {
+            "channels": ["1", "6", "11"],
+            "description": "Channels 1, 6, and 11 are non-overlapping and are the most suitable for use in this band.",
+            "interference": "Frequently used by household devices like microwaves, which can cause interference.",
+            "use_case": "Suitable for older devices and longer ranges."
+        },
+        "5 GHz": {
+            "channels": ["36", "40", "44", "48", "149", "153", "157", "161"],
+            "description": "Provides higher speeds and less interference. Channels do not overlap.",
+            "interference": "Less prone to interference, ideal for modern networks.",
+            "use_case": "Great for intensive applications like gaming and streaming."
+        },
+        "6 GHz": {
+            "channels": ["1", "2", "3", "4", "..."],
+            "description": "Available only for WiFi 6E devices, offering very high speeds.",
+            "interference": "Minimal congestion but requires modern devices.",
+            "use_case": "Perfect for future-proof networks."
+        }
+    }
+
+    # Render the template for channels info
+    return render_template(
+        'channels_info.html',
+        channel_info=channel_info
+    )
 
 @app.route('/heatmap')
 def heatmap():

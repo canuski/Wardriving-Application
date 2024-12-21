@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WiFi Channels Information</title>
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='channels.css') }}"
+    />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+        rel="stylesheet"
+    />
+</head>
+<body>
+    <!-- Header with Navbar -->
+    <header>
+        <h1>WiFi Channels Information</h1>
+    </header>
+    <nav class="navbar">
+        <ul>
+            <li><a href="/" class="{% if request.path == '/' %}active{% endif %}">Home</a></li>
+            <li><a href="/encryption_details" class="{% if request.path == '/encryption_details' %}active{% endif %}">Encryption Methods</a></li>
+            <li><a href="/heatmap" class="{% if request.path == '/heatmap' %}active{% endif %}">Heatmap</a></li>
+            <li><a href="/bandwidth_details" class="{% if request.path == '/bandwidth_details' %}active{% endif %}">Bandwidth Explanation</a></li>
+            <li><a href="/channels_info" class="{% if request.path == '/channels_info' %}active{% endif %}">WiFi Channels</a></li>
+        </ul>
+      </nav>
+
+    <!-- WiFi Channels Information -->
+    <main>
+        <section>
+            <h2>WiFi Channels Overview</h2>
+            <!-- Embed chart -->
+            <iframe
+                src="{{ url_for('static', filename='channels.html') }}"
+                title="WiFi Channels Chart"
+            ></iframe>
+
+            {% for band, info in channel_info.items() %}
+            <div class="channel-info">
+                <h2>{{ band }}</h2>
+                <ul>
+                    <p><strong>Channels:</strong> {{ info.channels | join(', ') }}</p>
+                    <p><strong>Description:</strong> {{ info.description }}</p>
+                    <p><strong>Interference:</strong> {{ info.interference }}</p>
+                    <p><strong>Use Case:</strong> {{ info.use_case }}</p>
+                </ul>
+            </div>
+            {% endfor %}
+        </section>
+    </main>
+</body>
+</html>
