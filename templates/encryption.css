@@ -1,0 +1,205 @@
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+  font-family: "Roboto", Arial, sans-serif;
+  background: linear-gradient(120deg, #f0f8ff, #e6f7ff); /* Gradient for depth */
+  color: #333; /* Dark gray text for readability */
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+}
+header {
+  background: linear-gradient(90deg, #4a90e2, #5ba4e6); /* Smooth gradient */
+  color: #fff;
+  padding: 1rem 0;
+  text-align: center;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000; /* Ensure header stays on top */
+}
+
+header h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin: 0.5rem 0;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2); /* Subtle text shadow */ 
+}
+
+/* Navbar Styling */
+.navbar {
+  background: linear-gradient(90deg, #4a90e2, #5ba4e6);
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 0.8rem 1.5rem;
+  position: sticky;
+  top: 0;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 2rem; /* Space between links */
+  margin: 0;
+  padding: 0;
+}
+
+.navbar ul li a {
+  text-decoration: none;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.navbar ul li a:hover {
+  background-color: rgba(255, 255, 255, 0.3); /* Add hover effect */
+  transform: translateY(-2px); /* Slight lift on hover */
+}
+
+.navbar ul li a:active {
+  background-color: rgba(255, 255, 255, 0.5); /* Active state effect */
+  transform: translateY(2px); /* Pressed effect */
+}
+
+/* Section Styling */
+section {
+  max-width: 1000px; /* Widen section */
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background: #ffffff; /* White content background */
+  border-radius: 16px; /* Smooth card-style corners */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Larger shadow for prominence */
+  animation: fadeIn 1s ease-in-out; /* Smooth fade-in animation */
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+/* Title for Embedded Graph */
+h2 {
+  font-size: 2rem;
+  color: #4a90e2;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  text-align: center; /* Ensure the title is centered */
+}
+
+/* Explanation List Styling */
+.explaining ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 2rem 0;
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping of list items */
+  justify-content: center; /* Center items */
+  gap: 1rem; /* Add some gap between list items */
+}
+
+.explaining ul li {
+  background: #f7faff; /* Light blue card background for contrast */
+  padding: 1rem 1.5rem; /* Adjusted padding for better balance */
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 280px; /* Limit the width of the list items */
+  transition: background-color 0.3s ease;
+  text-align: left; /* Align text to the left */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.explaining ul li:hover {
+  background-color: #e0f7ff; /* Lighten background on hover */
+}
+
+.explaining ul li strong {
+  color: #4a90e2;
+  font-weight: bold;
+}
+
+.explaining ul li p {
+  color: #555;
+  margin-top: 0.5rem;
+  text-align: justify; /* Justify the description text */
+  line-height: 1.5; /* Adjust line height for readability */
+}
+
+/* Embedded Graph Styling */
+iframe {
+  width: 100%;
+  height: 450px; /* Adjusted height for a more balanced chart size */
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Light shadow for better visuals */
+}
+
+/* Smooth Fade-in Animation */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .navbar ul {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .navbar ul li a {
+    font-size: 1rem;
+    padding: 0.5rem;
+  }
+
+  section {
+    padding: 1rem;
+  }
+
+  h2 {
+    font-size: 1.8rem; /* Slightly smaller title for smaller screens */
+  }
+
+  iframe {
+    height: 350px; /* Adjust iframe height on smaller screens */
+  }
+
+  ul li {
+    max-width: 45%; /* Allow list items to sit side by side */
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 2rem; /* Smaller font for smaller screens */
+  }
+
+  ul li {
+    max-width: 100%; /* Full width on very small screens */
+    padding: 1rem;
+  }
+
+  .navbar ul {
+    gap: 0.5rem;
+  }
+
+  a {
+    padding: 0.6rem 1.5rem; /* Smaller button on small screens */
+  }
+}
